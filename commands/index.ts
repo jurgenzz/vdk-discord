@@ -3,9 +3,9 @@ import { list } from "./list.ts";
 import { checkDynamicCommands } from "./lib/dynamicComands/checkDynamicCommands.ts";
 
 export const resolveCommand = async (ctx: Message) => {
-  const { text } = ctx;
+  const { content } = ctx;
 
-  const matchCommand = text.match(/^!\w+/);
+  const matchCommand = content.match(/^!\w+/);
   const cmd = matchCommand && matchCommand[0];
 
   if (!cmd) {

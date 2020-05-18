@@ -1,9 +1,10 @@
 import { Message } from "../../deps.ts";
+import { client } from "../../index.ts";
 
 export const coinbase = async (ctx: Message) => {
-  const { text } = ctx;
+  const { content,channel } = ctx;
 
-  const msg = text.replace(/^!coinbase ?/, "");
+  const msg = content.replace(/^!coinbase ?/, "");
 
   if (!msg) {
     return;
@@ -25,9 +26,9 @@ export const coinbase = async (ctx: Message) => {
       let reply = Object.keys(data)
         .map((key) => `${from}/${key}: ${data[key]}`)
         .join(", ");
-      ctx.reply(reply);
+      client.postMessage(channel.id, reply);
     } else if (data.Response === "Error" && data.Message) {
-      ctx.reply(data.Message);
+      client.postMessage(channel.id, data.Message);
     }
   }
 };

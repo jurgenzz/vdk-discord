@@ -1,10 +1,12 @@
+import { GuildChannel } from "https://deno.land/x/coward/src/classes/GuildChannel.ts";
+
 const npChannels: Map<string, string> = new Map([]);
 const generalChannels: Map<string, string> = new Map([])
 
 
-export const registerChannels = (channels: { name: string, id: string }[], parentId: string) => {
+export const registerChannels = (channels: Map<string, any>, parentId: string) => {
 
-    channels.forEach(channel => {
+    channels.forEach((channel: GuildChannel) => {
         if (channel.name === 'np') {
             npChannels.set(parentId, channel.id);
         }

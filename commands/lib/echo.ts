@@ -1,12 +1,13 @@
 import { Message } from "../../deps.ts";
+import { client } from "../../index.ts";
 export const echo = (ctx: Message) => {
-  const { text } = ctx;
+  const { content, channel } = ctx;
 
-  const reply = text.replace(/^!echo ?/, "");
+  const reply = content.replace(/^!echo ?/, "");
 
   if (!reply) {
       return;
   }
 
-  ctx.reply(reply);
+  client.postMessage(channel.id, reply);
 };

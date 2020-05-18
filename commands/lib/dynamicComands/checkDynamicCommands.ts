@@ -1,5 +1,6 @@
 import { Message } from "../../../deps.ts";
 import { config } from "../../../config.ts";
+import { client } from "../../../index.ts";
 
 const cmdCache: Map<string, string> = new Map([]);
 
@@ -7,7 +8,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
 
     const exists = cmdCache.get(cmd)
     if (exists) {
-        ctx.reply(exists);
+        client.postMessage(ctx.channel.id, exists);
         return;
     }
 
@@ -18,7 +19,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
         const commandsRe = await res.json();
         const commands = JSON.parse(commandsRe);
         if (commands[cmd]) {
-            ctx.reply(commands[cmd]);
+            client.postMessage(ctx.channel.id, commands[cmd]);
         }
 
         Object.keys(commands).forEach(key => {

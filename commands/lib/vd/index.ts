@@ -5,11 +5,12 @@ import { lookupNames } from "./lookupNames.ts";
 import { getNameDayByDate } from "./getNameByDate.ts";
 import { sendMessage } from "../../../helpers/sendMessage.ts";
 import { getGeneralChannels } from "../../../registerChannels.ts";
+import { client } from "../../../index.ts";
 
 export const vd = (ctx?: Message) => {
-  const { text } = ctx || {};
+  const { content } = ctx || {};
 
-  const msg = text && text.replace(/^!vd ?/, '')
+  const msg = content && content.replace(/^!vd ?/, "");
   let date = formatDate();
   let dateFromMsg;
   if (msg && ctx) {
@@ -18,23 +19,22 @@ export const vd = (ctx?: Message) => {
     if (typeof dateFromMsg === "object") {
       date = dateFromMsg;
     } else {
-      return ctx.reply(lookupNames(msg));
+      return client.postMessage(ctx.channel.id, lookupNames(msg));
     }
   }
 
   let reply = getNameDayByDate(date);
 
   if (!reply) {
-      return;
-  }
-  
-  if (ctx) {
-      ctx.reply(`${reply}.`);
-  } else {
-      const generalChannes = getGeneralChannels()
-      generalChannes.forEach(channel => {
-          sendMessage(channel, `${reply}.`)
-      })
+    return;
   }
 
+  if (ctx) {
+    client.postMessage(ctx.channel.id, `${reply}.`);
+  } else {
+    const generalChannes = getGeneralChannels();
+    generalChannes.forEach((channel) => {
+      sendMessage(channel, `${reply}.`);
+    });
+  }
 };

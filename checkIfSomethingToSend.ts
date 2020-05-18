@@ -5,12 +5,12 @@ import { removeReminder } from "./commands/lib/remind/removeReminder.ts";
 import { vd } from "./commands/lib/vd/index.ts";
 
 let vdSent = false;
-export const checkIfSomethingToSend = async () => {
+export const checkIfSomethingToSend = () => {
     
   const currentDate = hypheniphyDate(new Date());
 
   // check reminders
-  const reminders = await getReminders();
+  const reminders = getReminders();
   reminders.forEach((reminder) => {
     if (reminder.time === currentDate) {
       sendMessage(reminder.channel, reminder.message);
@@ -29,7 +29,7 @@ export const checkIfSomethingToSend = async () => {
 
           setTimeout(() => {
               vdSent = false
-          }, 1000)
+          }, 1500)
       }
   }
 
