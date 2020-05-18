@@ -41,7 +41,7 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
 
     if (res.is_playing) {
         // prettier-ignore
-        const msg = `🎵 ${res.item.artists.map((a: any) => a.name).join(", ")} — ${res.item.name} [${res.item.album.name}] | ${res.item.external_urls.spotify}`
+        const msg = `🎵 ${username}: ${res.item.artists.map((a: any) => a.name).join(", ")} — ${res.item.name} [${res.item.album.name}] | ${res.item.external_urls.spotify}`
 
         client.postMessage(channelId || ctx.channel.id, msg)
     }
