@@ -13,10 +13,10 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
     const { author, content } = ctx;
 
     const username = content.replace(/^!np(h ?| ?)/, "") || author.username;
-    //@ts-ignore exists
-    const guildId = ctx.channel.parentID;
 
-    const channelId = !replySameChannel && getNpChannel(guildId);
+    const guildId = client.channelGuildIDs.get(ctx.channel.id)
+
+    const channelId = !replySameChannel && guildId && getNpChannel(guildId);
 
     if (!username) {
         return;

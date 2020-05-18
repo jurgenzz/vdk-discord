@@ -12,8 +12,7 @@ export const remind = async (ctx: Message) => {
 
   const { id } = ctx.channel;
 
-  //@ts-ignore exits
-  const guild_id = msg.channel.parentID;
+  const guild_id = client.channelGuildIDs.get(id);
 
   const userId = author.id;
 
