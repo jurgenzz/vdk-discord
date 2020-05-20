@@ -18,5 +18,7 @@ export const guess = (msg: Message) => {
         updateScore(author.username, currentScore)
         deleteWord(guess, author.username);
 
+    } else {
+        client.postMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
     }
 }

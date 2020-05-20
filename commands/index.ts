@@ -5,7 +5,7 @@ import { checkDynamicCommands } from "./lib/dynamicComands/checkDynamicCommands.
 export const resolveCommand = async (ctx: Message) => {
   const { content } = ctx;
 
-  const matchCommand = content.match(/^!\w+(.?)\w+/);
+  const matchCommand = content.match(/^!\w+(\.?)\w+/);
   const cmd = matchCommand && matchCommand[0];
 
   if (!cmd) {

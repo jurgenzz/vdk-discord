@@ -6,9 +6,17 @@ const cmdCache: Map<string, string> = new Map([]);
 
 export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
 
-    const exists = cmdCache.get(cmd)
-    if (exists) {
-        client.postMessage(ctx.channel.id, exists);
+    let existingReply = cmdCache.get(cmd)
+
+    if (existingReply) {
+        let uiMessage = ctx.content.split(' ').slice(1).join(' ')
+
+        existingReply = existingReply
+        .replace(/{urlParam}/, encodeURIComponent(uiMessage))
+        .replace(/{param}/, uiMessage)
+        .replace(/{nick}/, ctx.author.username);
+
+        client.postMessage(ctx.channel.id, existingReply);
         return;
     }
 
@@ -19,7 +27,16 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
         const commandsRe = await res.json();
         const commands = JSON.parse(commandsRe);
         if (commands[cmd]) {
-            client.postMessage(ctx.channel.id, commands[cmd]);
+
+            let reply = commands[cmd];
+            let uiMessage = ctx.content.split(' ').slice(1).join(' ')
+
+            reply = reply
+            .replace(/{urlParam}/, encodeURIComponent(uiMessage))
+            .replace(/{param}/, uiMessage)
+            .replace(/{nick}/, ctx.author.username);
+
+            client.postMessage(ctx.channel.id, reply);
         }
 
         Object.keys(commands).forEach(key => {
@@ -29,3 +46,4 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
         console.log(err)
     }
 };
+
