@@ -14,11 +14,11 @@ setInterval(() => {
 }, 1000);
 
 
-client.on('messageCreate', (msg: Message) => {
-    resolveCommand(msg);
+client.evtMessageCreate.attach(({message}) => {
+    resolveCommand(message);
 })
 
-client.on('guildCreate', (guild: Guild) => {
+client.evtGuildCreate.attach(({guild}) => {
     registerChannels(guild.channels, guild.id)
 })
 
