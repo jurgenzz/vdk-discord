@@ -25,10 +25,13 @@ Runs with [deno](https://deno.land)
 - [x] !search
 - [x] !spotify
 - [x] support for vd.jurg.is
-- [ ] migrate vdk-ui inside this project
 - [x] 8:00 & 18:00 cron for !vd
 - [x] if #np room exists, reply !np to #np, not the channel currently in
 - [x] !nph (!now-playing-here) posts !np to current channel
-- [ ] rework !remind
-- [ ] `!award nick` simple counter++ without possibility to award yourself 
+- [x] `!quiz`
 - [x] cache dynamic commands
+- [ ] rework !remind?
+- [ ] track quiz authors
+- [ ] migrate vdk-ui inside this project
+- [ ] !award
+- [ ] register for !spotify
