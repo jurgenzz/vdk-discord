@@ -10,6 +10,12 @@ import { count } from "./lib/count.ts";
 import { nowPlaying, nowPlayingHere } from "./lib/nowPlaying/index.ts";
 import { remind } from "./lib/remind/index.ts";
 import { search } from "./lib/search.ts";
+import { makeQuiz } from "./lib/quiz/makeQuiz.ts";
+import { quiz } from "./lib/quiz/quiz.ts";
+import { guess } from "./lib/quiz/guess.ts";
+import { score } from "./lib/quiz/score.ts";
+import { scoresTop } from "./lib/quiz/scoresTop.ts";
+import { quizHelp } from "./lib/quiz/quizHelp.ts";
 
 list.set("!ping", ping);
 list.set("!echo", echo);
@@ -22,6 +28,12 @@ list.set("!np", nowPlaying);
 list.set("!nph", nowPlayingHere);
 list.set("!remind", remind);
 list.set("!search", search);
+list.set("!quiz.list", quiz);
+list.set("!quiz.guess", guess);
+list.set("!quiz.make", makeQuiz);
+list.set("!quiz.score", score);
+list.set("!quiz.top", scoresTop);
+list.set("!quiz", quizHelp);
 
 // @todo
 // !search
