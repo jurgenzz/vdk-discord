@@ -14,11 +14,11 @@ setInterval(() => {
 }, 1000);
 
 
-client.evtMessageCreate.attach(({ message }) => {
+client.evt.messageCreate.attach(({ message }) => {
   resolveCommand(message);
 })
 
-client.evtGuildCreate.attach(({ guild }) => {
+client.evt.guildCreate.attach(({ guild }) => {
     console.log('connected!')
     registerChannels(guild.channels, guild.id)
 })

@@ -1,5 +1,5 @@
 import { config } from "../../../config.ts";
-import { open, save } from "../../../deps.ts";
+import { DB } from "../../../deps.ts";
 
 export const refreshSpotifyToken = async (
   refresh_token: string,
@@ -23,7 +23,7 @@ export const refreshSpotifyToken = async (
   const data = await res.json();
 
   if (data && data.access_token) {
-    const db = await open("./tokens.db");
+    const db = new DB("./tokens.db");
 
     db.query(
       `
@@ -33,7 +33,6 @@ export const refreshSpotifyToken = async (
       { $access_token: data.access_token, $username: username }
     );
 
-    save(db);
     db.close();
   }
 

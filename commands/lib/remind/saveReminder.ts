@@ -1,4 +1,4 @@
-import { open, save } from "../../../deps.ts";
+import { DB } from "../../../deps.ts";
 import { getReminders } from "./getReminders.ts";
 
 export const saveReminders = async (
@@ -7,7 +7,7 @@ export const saveReminders = async (
   time: string,
   message: string
 ) => {
-  const db = await open("./tokens.db");
+  const db = new DB("./tokens.db");
 
   db.query(
     `INSERT INTO reminders 
@@ -38,7 +38,6 @@ export const saveReminders = async (
     id,
   });
 
-  save(db);
   db.close();
 
   return id;

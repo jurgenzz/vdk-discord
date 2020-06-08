@@ -1,9 +1,9 @@
-import { open } from "../../../deps.ts";
+import { DB } from "../../../deps.ts";
 
 export const getSpotifyTokens = async (
   username: string
 ): Promise<{ access_token: string; refresh_token: string } | null> => {
-  const db = await open("./tokens.db");
+  const db = new DB("./tokens.db");
 
   const [user] = db.query(
     `SELECT access_token, refresh_token FROM tokens WHERE username=$username`,

@@ -1,4 +1,4 @@
-import { GuildChannel } from "https://deno.land/x/coward/src/classes/GuildChannel.ts";
+import { GuildChannel } from "https://deno.land/x/coward/src/structures/GuildChannel.ts";
 
 const npChannels: Map<string, string> = new Map([]);
 const generalChannels: Map<string, string> = new Map([])

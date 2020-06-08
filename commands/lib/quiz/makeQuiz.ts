@@ -1,4 +1,4 @@
-import { Message } from "../../../deps.ts";
+import { Message, DMChannel } from "../../../deps.ts";
 import { client } from "../../../index.ts";
 import { words, addWord } from "./quizDb.ts";
 
@@ -6,10 +6,12 @@ export const makeQuiz = (msg: Message) => {
 
     const {channel, content, author} = msg;
     
-    const isPrivate = !channel;
+    const isPrivate = channel instanceof DMChannel;
+
 
     if (!isPrivate) {
         client.postMessage(channel.id, 'Command available only in private message. Usage - "!quiz.make word:definition')
+        return;
     }
 
     const msgText = content.replace(/!quiz.make /, '');
@@ -20,6 +22,5 @@ export const makeQuiz = (msg: Message) => {
         addWord(word.replace(/ /g, ''), definition);
     }
 
-    //todo: reply to pm
-
+    client.postMessage(channel.id, 'Quiz created!')
 };

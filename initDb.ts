@@ -1,9 +1,9 @@
-import { open, save } from "./deps.ts";
+import { DB } from "./deps.ts";
 import { getReminders } from "./commands/lib/remind/getReminders.ts";
 import { scores, words } from "./commands/lib/quiz/quizDb.ts";
 
 export const initDb = async () => {
-    const db = await open("./tokens.db");
+    const db = new DB("./tokens.db");
 
     db.query(
         `
@@ -80,7 +80,6 @@ export const initDb = async () => {
         words.set(word, definition);
     })
 
-    save(db);
     db.close();
 };
 
