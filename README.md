@@ -35,3 +35,5 @@ Runs with [deno](https://deno.land)
 - [ ] migrate vdk-ui inside this project
 - [ ] !award
 - [ ] register for !spotify
+- [ ] !quiz.gibap
+- [ ] quiz ignore same user
