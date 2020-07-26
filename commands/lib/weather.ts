@@ -39,5 +39,5 @@ export const weather = async (ctx: Message) => {
   const weatherInfo = data.list[0];
   const weatherDescription = data.list[0].weather[0];
   const reply = `Weather in ${city}: ${weatherDescription.description}, Temperature: ${weatherInfo.main.temp}℃, wind: ${weatherInfo.wind.speed} m/s.`;
-  client.postMessage(channel.id, reply)
+  client.createMessage(channel.id, reply)
 };

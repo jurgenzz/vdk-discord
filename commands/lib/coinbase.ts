@@ -26,9 +26,9 @@ export const coinbase = async (ctx: Message) => {
       let reply = Object.keys(data)
         .map((key) => `${from}/${key}: ${data[key]}`)
         .join(", ");
-      client.postMessage(channel.id, reply);
+      client.createMessage(channel.id, reply);
     } else if (data.Response === "Error" && data.Message) {
-      client.postMessage(channel.id, data.Message);
+      client.createMessage(channel.id, data.Message);
     }
   }
 };

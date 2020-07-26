@@ -11,10 +11,10 @@ export const gibap = (msg: Message) => {
     const isRight = words.get(gibap)
 
     if (isRight) {
-        client.postMessage(channel.id, `No one guessed <@${author.id}>'s quiz: "${gibap}" - ${isRight}`)
+        client.createMessage(channel.id, `No one guessed <@${author.id}>'s quiz: "${gibap}" - ${isRight}`)
         deleteWord(gibap, author.username);
 
     } else {
-        client.postMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
+        client.createMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
     }
 }

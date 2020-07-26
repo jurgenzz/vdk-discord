@@ -14,11 +14,11 @@ export const guess = (msg: Message) => {
         let currentScore = scores.get(author.username) || 0;
         currentScore++;
         
-        client.postMessage(channel.id, `<@${author.id}> (score: ${currentScore}) guessed: "${guess}" - ${isRight}`)
+        client.createMessage(channel.id, `<@${author.id}> (score: ${currentScore}) guessed: "${guess}" - ${isRight}`)
         updateScore(author.username, currentScore)
         deleteWord(guess, author.username);
 
     } else {
-        client.postMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
+        client.createMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
     }
 }

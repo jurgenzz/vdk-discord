@@ -45,13 +45,13 @@ export const count = async (ctx: Message) => {
   }
 
   if (results.length) {
-    client.postMessage(
+    client.createMessage(
       channel.id,
       `PMPL stāsta, ka Latvijā ir apmēram šādi - ${results.join(
         ", "
       )}. http://vd.jurg.is/n?q=${query}`
     );
   } else {
-    client.postMessage(channel.id, `PMLP saka, ka nav ar šādu vārdu neviens.`);
+    client.createMessage(channel.id, `PMLP saka, ka nav ar šādu vārdu neviens.`);
   }
 };

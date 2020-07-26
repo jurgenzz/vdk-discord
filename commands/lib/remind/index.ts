@@ -39,5 +39,5 @@ export const remind = async (ctx: Message) => {
 
   const willRemindInTs = reminderTs - Date.now();
   const willRemindInDate = humanizeDelta(willRemindInTs);
-  client.postMessage(ctx.channel.id, `Ok <@${userId}>! Will remind you in ${willRemindInDate}! `);
+  client.createMessage(ctx.channel.id, `Ok <@${userId}>! Will remind you in ${willRemindInDate}! `);
 };

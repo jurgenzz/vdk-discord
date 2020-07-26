@@ -19,7 +19,7 @@ export const vd = (ctx?: Message) => {
     if (typeof dateFromMsg === "object") {
       date = dateFromMsg;
     } else {
-      return client.postMessage(ctx.channel.id, lookupNames(msg));
+      return client.createMessage(ctx.channel.id, lookupNames(msg));
     }
   }
 
@@ -30,7 +30,7 @@ export const vd = (ctx?: Message) => {
   }
 
   if (ctx) {
-    client.postMessage(ctx.channel.id, `${reply}.`);
+    client.createMessage(ctx.channel.id, `${reply}.`);
   } else {
     const generalChannes = getGeneralChannels();
     generalChannes.forEach((channel) => {

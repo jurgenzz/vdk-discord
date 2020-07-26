@@ -6,7 +6,7 @@ export const search = (ctx: Message) => {
 
   let query = content.replace(/!search ?/, "");
 
-  client.postMessage(channel.id,
+  client.createMessage(channel.id,
     `https://developers.lv/?search${
       query ? `&text=${encodeURIComponent(query)}` : ""
     }`
