@@ -1,5 +1,5 @@
 import "./initDb.ts";
-import { Coward, Message, Guild } from "./deps.ts";
+import { Coward } from "./deps.ts";
 import { config } from "./config.ts";
 import { resolveCommand } from "./commands/index.ts";
 import { checkIfSomethingToSend } from "./checkIfSomethingToSend.ts";

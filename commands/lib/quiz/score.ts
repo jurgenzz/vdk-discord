@@ -4,5 +4,5 @@ import { scores } from "./quizDb.ts";
 
 export const score = (msg: Message) => {
   const { channel, author } = msg;
-  client.postMessage(channel.id, `Current score: ${scores.get(author.username) || 0}.`);
+  client.createMessage(channel.id, `Current score: ${scores.get(author.username) || 0}.`);
 };

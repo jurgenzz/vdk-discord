@@ -35,7 +35,7 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
     
     if (!res) {
         // unknown or not playing anything
-        client.postMessage(ctx.channel.id, "Nothing is playin'");
+        client.createMessage(ctx.channel.id, "Nothing is playin'");
         return;
     }
 
@@ -43,6 +43,6 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
         // prettier-ignore
         const msg = `🎵 ${username}: ${res.item.artists.map((a: any) => a.name).join(", ")} — ${res.item.name} [${res.item.album.name}] | ${res.item.external_urls.spotify}`
 
-        client.postMessage(channelId || ctx.channel.id, msg)
+        client.createMessage(channelId || ctx.channel.id, msg)
     }
 };

@@ -5,5 +5,5 @@ import { humanizeDelta } from "../../helpers/humanizeDelta.ts";
 export const uptime = (ctx: Message) => {
   const diff = Date.now() - upSince;
 
-  client.postMessage(ctx.channel.id, humanizeDelta(diff))
+  client.createMessage(ctx.channel.id, humanizeDelta(diff))
 };

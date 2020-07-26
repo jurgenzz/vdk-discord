@@ -16,7 +16,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
         .replace(/{param}/, uiMessage)
         .replace(/{nick}/, ctx.author.username);
 
-        client.postMessage(ctx.channel.id, existingReply);
+        client.createMessage(ctx.channel.id, existingReply);
         return;
     }
 
@@ -36,7 +36,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
             .replace(/{param}/, uiMessage)
             .replace(/{nick}/, ctx.author.username);
 
-            client.postMessage(ctx.channel.id, reply);
+            client.createMessage(ctx.channel.id, reply);
         }
 
         Object.keys(commands).forEach(key => {
