@@ -27,6 +27,6 @@ export const makeQuiz = (msg: Message) => {
   const quizChannels = getQuizChannel();
 
   quizChannels.forEach((id) => {
-    client.createMessage(id, `New quiz added by ${author.username}: "${trimmedWord}"!`);
+    client.createMessage(id, `New quiz added by ${author.username}: "${definition}"!`);
   });
 };
