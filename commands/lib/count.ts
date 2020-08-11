@@ -28,7 +28,7 @@ export const count = async (ctx: Message) => {
   for (let i = 0; i < 3; i++) {
     const row = rows && rows[i];
     if (!row) {
-      return;
+      break;
     }
     const [nameMatch, countMatch] = row.match(tdRegex) || [];
     const [name] = nameMatch.match(/>[A-Ž]+ [A-Ž]+|>[A-Ž]+/) || [];
