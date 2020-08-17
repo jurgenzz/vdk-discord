@@ -24,3 +24,5 @@ client.evt.guildCreate.attach(({ guild }) => {
 })
 
 client.connect();
+
+import './server/index.ts'

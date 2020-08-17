@@ -1,49 +1,42 @@
-import { Message } from "../../../deps.ts";
-import { config } from "../../../config.ts";
-import { client } from "../../../index.ts";
+import { Message } from '../../../deps.ts';
+import { client } from '../../../index.ts';
+import { DB } from '../../../deps.ts';
 
 const cmdCache: Map<string, string> = new Map([]);
 
 export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
+  let codeToRun = cmdCache.get(cmd);
 
-    let existingReply = cmdCache.get(cmd)
+  if (!codeToRun) {
+    const db = new DB('./tokens.db');
+    const commands = db.query(`SELECT * FROM commands`, {});
 
-    if (existingReply) {
-        let uiMessage = ctx.content.split(' ').slice(1).join(' ')
+    [...commands].forEach(([c, output]) => {
+      if (!cmdCache.get(c)) {
+        cmdCache.set(c, output);
+      }
+      if (c === cmd) {
+        codeToRun = output;
+      }
+    });
+  }
 
-        existingReply = existingReply
-        .replace(/{urlParam}/, encodeURIComponent(uiMessage))
-        .replace(/{param}/, uiMessage)
-        .replace(/{nick}/, ctx.author.username);
+  if (!codeToRun) {
+    return;
+  }
+  const content = ctx.content.split(' ').slice(1).join(' ');
+  console.log(`${Deno.cwd()}/run.ts`);
+  const process = Deno.run({
+    cmd: ['deno', 'run', '--allow-net', `${Deno.cwd()}/commands/lib/dynamicComands/run.ts`, codeToRun, content],
+    stdout: 'piped',
+  });
 
-        client.createMessage(ctx.channel.id, existingReply);
-        return;
-    }
+  const rawOutput = await process.output();
+  const decoder = new TextDecoder();
 
-    const req = new Request(`${config.commandsApi}/api/commands`);
+  const output = decoder.decode(rawOutput);
 
-    try {
-        const res = await fetch(req);
-        const commandsRe = await res.json();
-        const commands = JSON.parse(commandsRe);
-        if (commands[cmd]) {
-
-            let reply = commands[cmd];
-            let uiMessage = ctx.content.split(' ').slice(1).join(' ')
-
-            reply = reply
-            .replace(/{urlParam}/, encodeURIComponent(uiMessage))
-            .replace(/{param}/, uiMessage)
-            .replace(/{nick}/, ctx.author.username);
-
-            client.createMessage(ctx.channel.id, reply);
-        }
-
-        Object.keys(commands).forEach(key => {
-            cmdCache.set(key, commands[key])
-        })
-    } catch (err) {
-        console.log(err)
-    }
+  if (output) {
+    client.createMessage(ctx.channel.id, output);
+  }
 };
-
