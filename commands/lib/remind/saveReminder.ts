@@ -5,20 +5,22 @@ export const saveReminders = async (
   guild: string,
   channel: string,
   time: string,
-  message: string
+  message: string,
+  text: string,
+  ts: number
 ) => {
   const db = new DB("./tokens.db");
 
   db.query(
     `INSERT INTO reminders 
     (
-      guild, channel, time, message
+      guild, channel, time, message, text, ts
     ) 
     VALUES 
     (
-        ?, ?, ?, ?
+        ?, ?, ?, ?, ?, ?
     )`,
-    [guild, channel, time, message]
+    [guild, channel, time, message, text, ts]
   );
 
   // get last id
@@ -36,6 +38,8 @@ export const saveReminders = async (
     time,
     message,
     id,
+    text,
+    ts
   });
 
   db.close();
