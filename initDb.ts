@@ -60,11 +60,18 @@ export const initDb = async () => {
         db.query(
             `
                 ALTER TABLE reminders
-                ADD COLUMN text TEXT
                 ADD COLUMN ts INTEGER;
             `
         )
-    } catch(err) {
+
+        db.query(
+            `
+                ALTER TABLE reminders
+                ADD COLUMN text TEXT;
+            `
+        )
+
+    } catch (err) {
         //
     }
 
