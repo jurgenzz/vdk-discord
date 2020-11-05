@@ -1,8 +1,7 @@
-import { Message } from "../../deps.ts";
-import { client } from "../../index.ts";
+import { Message, sendMessage } from "../../deps.ts";
 
 export const coinbase = async (ctx: Message) => {
-  const { content,channel } = ctx;
+  const { content, channelID } = ctx;
 
   const msg = content.replace(/^!coinbase ?/, "");
 
@@ -26,9 +25,9 @@ export const coinbase = async (ctx: Message) => {
       let reply = Object.keys(data)
         .map((key) => `${from}/${key}: ${data[key]}`)
         .join(", ");
-      client.createMessage(channel.id, reply);
+      sendMessage(channelID, reply);
     } else if (data.Response === "Error" && data.Message) {
-      client.createMessage(channel.id, data.Message);
+      sendMessage(channelID, data.Message);
     }
   }
 };

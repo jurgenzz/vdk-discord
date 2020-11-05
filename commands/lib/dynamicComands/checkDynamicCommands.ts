@@ -1,6 +1,5 @@
-import { Message } from "../../../deps.ts";
+import { Message, sendMessage } from "../../../deps.ts";
 import { config } from "../../../config.ts";
-import { client } from "../../../index.ts";
 
 const cmdCache: Map<string, string> = new Map([]);
 
@@ -16,7 +15,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
         .replace(/{param}/, uiMessage)
         .replace(/{nick}/, ctx.author.username);
 
-        client.createMessage(ctx.channel.id, existingReply);
+        sendMessage(ctx.channelID, existingReply);
         return;
     }
 
@@ -36,7 +35,7 @@ export const checkDynamicCommands = async (ctx: Message, cmd: string) => {
             .replace(/{param}/, uiMessage)
             .replace(/{nick}/, ctx.author.username);
 
-            client.createMessage(ctx.channel.id, reply);
+            sendMessage(ctx.channelID, reply);
         }
 
         Object.keys(commands).forEach(key => {

@@ -1,11 +1,9 @@
-import { Message } from "../../../deps.ts";
+import { Message, sendMessage } from "../../../deps.ts";
 import { formatDate } from "../../../helpers/formatDate.ts";
 import { formatDateFromStr } from "../../../helpers/formatDateFromStr.ts";
 import { lookupNames } from "./lookupNames.ts";
 import { getNameDayByDate } from "./getNameByDate.ts";
-import { sendMessage } from "../../../helpers/sendMessage.ts";
 import { getGeneralChannels } from "../../../registerChannels.ts";
-import { client } from "../../../index.ts";
 
 export const vd = (ctx?: Message) => {
   const { content } = ctx || {};
@@ -19,7 +17,7 @@ export const vd = (ctx?: Message) => {
     if (typeof dateFromMsg === "object") {
       date = dateFromMsg;
     } else {
-      return client.createMessage(ctx.channel.id, lookupNames(msg));
+      return sendMessage(ctx.channelID, lookupNames(msg));
     }
   }
 
@@ -30,7 +28,7 @@ export const vd = (ctx?: Message) => {
   }
 
   if (ctx) {
-    client.createMessage(ctx.channel.id, `${reply}.`);
+    sendMessage(ctx.channelID, `${reply}.`);
   } else {
     const generalChannes = getGeneralChannels();
     generalChannes.forEach((channel) => {

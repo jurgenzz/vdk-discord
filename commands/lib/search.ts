@@ -1,12 +1,12 @@
-import { Message } from "../../deps.ts";
-import { client } from "../../index.ts";
+import { Message, sendMessage } from "../../deps.ts";
+
 
 export const search = (ctx: Message) => {
-  const { content, channel } = ctx;
+  const { content, channelID } = ctx;
 
   let query = content.replace(/!search ?/, "");
 
-  client.createMessage(channel.id,
+  sendMessage(channelID,
     `https://developers.lv/?search${
       query ? `&text=${encodeURIComponent(query)}` : ""
     }`

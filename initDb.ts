@@ -12,7 +12,9 @@ export const initDb = async () => {
             guild TEXT,
             channel TEXT,
             time TEXT,
-            message TEXT
+            message TEXT,
+            text TEXT,
+            ts INTEGER
         )
     `,
         []
