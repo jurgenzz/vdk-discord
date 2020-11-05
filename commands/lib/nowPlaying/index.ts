@@ -1,22 +1,19 @@
-import { Message } from "../../../deps.ts";
+import { Message, sendMessage } from "../../../deps.ts";
 import { getSpotifyTokens } from "./spotifyTokens.ts";
 import { getCurrenyPlayingSong } from "./getCurrentPlayingSong.ts";
 import { getNpChannel } from "../../../registerChannels.ts";
-import { sendMessage } from "../../../helpers/sendMessage.ts";
-import { client } from "../../../index.ts";
 
 export const nowPlayingHere = async (ctx: Message) => {
     await nowPlaying(ctx, true)
 }
 
 export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
-    const { author, content } = ctx;
+    const { author, content, guildID, channelID } = ctx;
 
     const username = content.replace(/^!np(h ?| ?)/, "") || author.username;
 
-    const guildId = client.channelGuildIDs.get(ctx.channel.id)
 
-    const channelId = !replySameChannel && guildId && getNpChannel(guildId);
+    const newChannelId = !replySameChannel && guildID && getNpChannel(guildID);
 
     if (!username) {
         return;
@@ -35,7 +32,7 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
     
     if (!res) {
         // unknown or not playing anything
-        client.createMessage(ctx.channel.id, "Nothing is playin'");
+        sendMessage(channelID, "Nothing is playin'");
         return;
     }
 
@@ -43,6 +40,6 @@ export const nowPlaying = async (ctx: Message, replySameChannel: boolean) => {
         // prettier-ignore
         const msg = `🎵 ${username}: ${res.item.artists.map((a: any) => a.name).join(", ")} — ${res.item.name} [${res.item.album.name}] | ${res.item.external_urls.spotify}`
 
-        client.createMessage(channelId || ctx.channel.id, msg)
+        sendMessage(newChannelId || channelID, msg)
     }
 };

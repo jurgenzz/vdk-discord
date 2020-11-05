@@ -1,6 +1,5 @@
-import { Message } from "../../deps.ts";
+import { Message, sendMessage } from "../../deps.ts";
 import { config } from "../../config.ts";
-import { client } from "../../index.ts";
 
 let reqInProgress = false;
 
@@ -13,7 +12,7 @@ export const weather = async (ctx: Message) => {
     reqInProgress = false;
   }, 5000);
 
-  const { content, channel } = ctx;
+  const { content, channelID } = ctx;
   const msgArr = content.split(" ");
   const city = msgArr[1];
 
@@ -39,5 +38,5 @@ export const weather = async (ctx: Message) => {
   const weatherInfo = data.list[0];
   const weatherDescription = data.list[0].weather[0];
   const reply = `Weather in ${city}: ${weatherDescription.description}, Temperature: ${weatherInfo.main.temp}℃, wind: ${weatherInfo.wind.speed} m/s.`;
-  client.createMessage(channel.id, reply)
+  sendMessage(channelID, reply)
 };

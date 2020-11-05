@@ -1,7 +1,6 @@
-import { Message } from '../../deps.ts';
-import { client } from '../../index.ts';
+import { Message, sendMessage } from '../../deps.ts';
 export const echo = (ctx: Message) => {
-  const { content, channel } = ctx;
+  const { content, channelID } = ctx;
 
   const reply = content.replace(/^!echo ?/, '');
 
@@ -9,5 +8,5 @@ export const echo = (ctx: Message) => {
     return;
   }
 
-  client.createMessage(channel.id, reply);
+  sendMessage(channelID, reply);
 };

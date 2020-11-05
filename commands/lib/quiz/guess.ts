@@ -1,10 +1,9 @@
-import { Message } from "../../../deps.ts";
+import { Message, sendMessage } from "../../../deps.ts";
 import { words, scores, updateScore, deleteWord } from "./quizDb.ts";
-import { client } from "../../../index.ts";
 
 
 export const guess = (msg: Message) => {
-    const {content, author, channel} = msg;
+    const {content, author, channelID} = msg;
 
     const guess = content.replace(/!quiz.guess /, '');
 
@@ -14,11 +13,11 @@ export const guess = (msg: Message) => {
         let currentScore = scores.get(author.username) || 0;
         currentScore++;
         
-        client.createMessage(channel.id, `<@${author.id}> (score: ${currentScore}) guessed: "${guess}" - ${isRight}`)
+        sendMessage(channelID, `<@${author.id}> (score: ${currentScore}) guessed: "${guess}" - ${isRight}`)
         updateScore(author.username, currentScore)
         deleteWord(guess, author.username);
 
     } else {
-        client.createMessage(channel.id, 'Whoops, no active quiz has this word as an answer');
+        sendMessage(channelID, 'Whoops, no active quiz has this word as an answer');
     }
 }

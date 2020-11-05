@@ -37,17 +37,25 @@ export const stringToSeconds = (amount: string) => {
   if (!amount) {
     return 0;
   }
-  let value = (amount.match(/\d+/) || [])[0];
-  let key = (amount.match(/[a-z]/) || [])[0];
 
-  if (!value || !key) {
+  const values = amount.match(/\d+[a-z]+/g);
+
+
+  const ts = values?.reduce((curr, am) =>  {
+    let value = (am.match(/\d+/) || [])[0];
+    let key = (am.match(/[a-z]/) || [])[0];
+  
+    if (!value || !key) {
+      return 0;
+    }
+  
+    if (DURATION_MAPPING[key]) {
+      return curr +  parseInt(value) * DURATION_MAPPING[key];
+    }
     return 0;
-  }
+  }, 0)
 
-  if (DURATION_MAPPING[key]) {
-    return parseInt(value) * DURATION_MAPPING[key];
-  }
-  return 0;
+  return ts || 0
 };
 
 export const hypheniphyDate = (date: Date) => {

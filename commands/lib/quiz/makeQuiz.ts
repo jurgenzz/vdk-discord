@@ -1,15 +1,16 @@
-import { Message, DMChannel } from '../../../deps.ts';
-import { client } from '../../../index.ts';
+import { Message, sendMessage } from '../../../deps.ts';
 import { addWord } from './quizDb.ts';
 import { getQuizChannel } from '../../../registerChannels.ts';
 
 export const makeQuiz = (msg: Message) => {
-  const { channel, content, author } = msg;
+  const { channelID, content, author } = msg;
 
-  const isPrivate = channel instanceof DMChannel;
+  // TODO not sure how good is this approach
+  // we assume if there is no guildID, that must be a private message
+  const isPrivate = !msg.guildID
 
   if (!isPrivate) {
-    client.createMessage(channel.id, 'Command available only in private message. Usage - "!quiz.make word:definition');
+    sendMessage(channelID, 'Command available only in private message. Usage - "!quiz.make word:definition');
     return;
   }
 
@@ -22,11 +23,11 @@ export const makeQuiz = (msg: Message) => {
     addWord(trimmedWord, definition);
   }
 
-  client.createMessage(channel.id, 'Quiz created!');
+  sendMessage(channelID, 'Quiz created!');
 
   const quizChannels = getQuizChannel();
 
   quizChannels.forEach((id) => {
-    client.createMessage(id, `New quiz added by ${author.username}: "${definition}"!`);
+    sendMessage(id, `New quiz added by ${author.username}: "${definition}"!`);
   });
 };
