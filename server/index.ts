@@ -1,5 +1,4 @@
 import { Application } from 'https://deno.land/x/abc@v1/mod.ts';
-import { Header } from 'https://deno.land/x/abc@v1/constants.ts';
 import { config } from '../config.ts';
 import { storeTokens } from '../commands/lib/nowPlaying/storeTokens.ts';
 
@@ -16,11 +15,11 @@ app.get('/auth', async ({ request, response }) => {
 
   if (q) {
     response.headers = new Headers();
-    response.headers.set(Header.Location, `${AUTH_URL}${q}`);
+    response.headers.set('Location', `${AUTH_URL}${q}`);
     response.status = 302;
   } else {
     response.headers = new Headers();
-    response.headers.set(Header.Location, `vd.jurg.is`);
+    response.headers.set('Location', `vd.jurg.is`);
     response.status = 302;
   }
 });
