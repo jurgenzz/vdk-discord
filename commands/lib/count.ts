@@ -1,10 +1,9 @@
-import { Message } from "../../deps.ts";
-import { client } from "../../index.ts";
+import { Message, sendMessage } from "../../deps.ts";
 
 const rowsRegex = /<tr>\n+.+<td>(<.+?>)?([A-Ž0-9]+|[A-Ž]+ [A-Ž]+)<.+?>+\n+.+<td>([0-9]+)<\/td>/gm;
 const tdRegex = /<td>(<.+?>)?([A-Ž0-9]+|[A-Ž]+ [A-Ž]+)<.+?>/gm;
 export const count = async (ctx: Message) => {
-  const { content, channel } = ctx;
+  const { content, channelID } = ctx;
 
   let query = content.replace(/!count ?/, "");
 
@@ -45,13 +44,13 @@ export const count = async (ctx: Message) => {
   }
 
   if (results.length) {
-    client.createMessage(
-      channel.id,
+    sendMessage(
+      channelID,
       `PMPL stāsta, ka Latvijā ir apmēram šādi - ${results.join(
         ", "
       )}. http://vd.jurg.is/n?q=${query}`
     );
   } else {
-    client.createMessage(channel.id, `PMLP saka, ka nav ar šādu vārdu neviens.`);
+    sendMessage(channelID, `PMLP saka, ka nav ar šādu vārdu neviens.`);
   }
 };

@@ -1,6 +1,5 @@
-import { Message } from "../../deps.ts";
-import { client } from "../../index.ts";
+import { Message, sendMessage } from "../../deps.ts";
 
 export const ping = (ctx: Message) => {
-  client.createMessage(ctx.channel.id, "pong");
+  sendMessage(ctx.channelID, "pong");
 };
