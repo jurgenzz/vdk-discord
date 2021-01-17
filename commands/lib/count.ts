@@ -13,12 +13,11 @@ export const count = async (ctx: Message) => {
 
   query = encodeURIComponent(query);
 
-  const url = `http://www.pmlp.gov.lv/lv/sakums/statistika/personvardu-datu-baze/?id=137&query=${query}`;
+  const url = `https://personvardi.pmlp.gov.lv/index.php?name=${query}`;
 
   const req = new Request(url);
   const res = await fetch(req);
-
-  const data = await res.text();
+  const data = (await res.text()).replace(/\r/g, '');
 
   let rows = data.match(rowsRegex);
 
@@ -46,7 +45,7 @@ export const count = async (ctx: Message) => {
   if (results.length) {
     sendMessage(
       channelID,
-      `PMPL stāsta, ka Latvijā ir apmēram šādi - ${results.join(
+      `PMLP stāsta, ka Latvijā ir apmēram šādi - ${results.join(
         ", "
       )}. http://vd.jurg.is/n?q=${query}`
     );
