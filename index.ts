@@ -26,3 +26,5 @@ export const upSince = Date.now();
 setInterval(() => {
   checkIfSomethingToSend();
 }, 1000);
+
+import './server/index.ts'
