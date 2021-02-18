@@ -1,8 +1,12 @@
-import { DB } from '../../../deps.ts';
+import { DB } from "../../../deps.ts";
 
-export const storeTokens = (username: string, refresh_token: string, access_token: string) => {
+export const storeToken = (
+  username: string,
+  refresh_token: string,
+  access_token: string
+) => {
   //
-  const db = new DB('./tokens.db');
+  const db = new DB("./tokens.db");
 
   const [user] = db.query(`SELECT * FROM tokens WHERE username=$username`, {
     $username: username,
@@ -15,7 +19,11 @@ export const storeTokens = (username: string, refresh_token: string, access_toke
             access_token = $access_token, 
             refresh_token = $refresh_token
           WHERE username=$username`,
-      { $access_token: access_token, $username: username, $refresh_token: refresh_token }
+      {
+        $access_token: access_token,
+        $username: username,
+        $refresh_token: refresh_token,
+      }
     );
   } else {
     db.query(

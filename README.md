@@ -17,7 +17,7 @@ Runs with [deno](https://deno.land)
  }
 ```
 
-* `denon run --allow-net --allow-read --allow-write -c=tsconfig.json index.ts`
+* `deno run --allow-net --allow-read --allow-write -c=tsconfig.json index.ts`
 
 
 ### TODOS
