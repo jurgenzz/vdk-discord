@@ -50,6 +50,6 @@ export const count = async (ctx: Message) => {
       )}. http://vd.jurg.is/n?q=${query}`
     );
   } else {
-    sendMessage(channelID, `PMLP saka, ka nav ar šādu vārdu neviens.`);
+    sendMessage(channelID, `PMPL saka, ka šis vārds vēl ir brīvs.`);
   }
 };
